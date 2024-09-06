@@ -3,142 +3,85 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Avaliação de Desempenho 2024 | Jupiter Hotel Group</title>
+    <title>Seleção de Empresa</title>
     <style>
         body {
             font-family: Arial, sans-serif;
             margin: 20px;
         }
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            display: none; /* Esconde a tabela até que o número de funcionário seja inserido */
-        }
-        table, th, td {
-            border: 1px solid #ccc;
-        }
-        th, td {
-            padding: 10px;
+        .center {
             text-align: center;
-        }
-        th {
-            background-color: #f2f2f2;
-        }
-        .ponderacao {
-            margin-left: 20px;
         }
         button {
             padding: 10px 20px;
+            margin: 5px;
             background-color: #4CAF50;
             color: white;
             border: none;
-            border-radius: 5px;
             cursor: pointer;
         }
         button:hover {
             background-color: #45a049;
         }
-        .center {
-            text-align: center;
-        }
     </style>
 </head>
 <body>
 
-<h2>Avaliação de Desempenho</h2>
+<h2 class="center">Selecione a Empresa</h2>
 
-<!-- Formulário para inserção do número de funcionário -->
-<div id="funcionarioDiv" class="center">
-    <label for="numeroFuncionario">Insira o número de funcionário:</label>
-    <input type="text" id="numeroFuncionario" required>
-    <button type="button" onclick="mostrarInquerito()">Enviar</button>
+<div class="center">
+    <button onclick="selecionarEmpresa(1)">Empresa 1</button>
+    <button onclick="selecionarEmpresa(2)">Empresa 2</button>
+    <button onclick="selecionarEmpresa(3)">Empresa 3</button>
+    <button onclick="selecionarEmpresa(4)">Empresa 4</button>
+    <button onclick="selecionarEmpresa(5)">Empresa 5</button>
 </div>
 
-<!-- Tabela do inquérito escondida inicialmente -->
-<form id="avaliacaoForm">
-    <table id="inqueritoTabela">
-        <thead>
-            <tr>
-                <th>Pergunta</th>
-                <th>1 - Muito Insatisfeito</th>
-                <th>2 - Insatisfeito</th>
-                <th>3 - Satisfeito</th>
-                <th>4 - Muito Satisfeito</th>
-                <th class="resultado">Resultado</th>
-            </tr>
-        </thead>
-        <tbody>
-            <!-- Exemplo de pergunta 1 -->
-            <tr>
-                <td>Como você avalia sua produtividade?</td>
-                <td><input type="radio" name="produtividade" value="1" onclick="atualizarPonderacao(1, this.value)"></td>
-                <td><input type="radio" name="produtividade" value="2" onclick="atualizarPonderacao(1, this.value)"></td>
-                <td><input type="radio" name="produtividade" value="3" onclick="atualizarPonderacao(1, this.value)"></td>
-                <td><input type="radio" name="produtividade" value="4" onclick="atualizarPonderacao(1, this.value)"></td>
-                <td class="resultado" id="resultado1">0</td>
-            </tr>
-
-            <!-- Exemplo de pergunta 2 -->
-            <tr>
-                <td>Como você avalia sua comunicação com a equipe?</td>
-                <td><input type="radio" name="comunicacao" value="1" onclick="atualizarPonderacao(2, this.value)"></td>
-                <td><input type="radio" name="comunicacao" value="2" onclick="atualizarPonderacao(2, this.value)"></td>
-                <td><input type="radio" name="comunicacao" value="3" onclick="atualizarPonderacao(2, this.value)"></td>
-                <td><input type="radio" name="comunicacao" value="4" onclick="atualizarPonderacao(2, this.value)"></td>
-                <td class="resultado" id="resultado2">0</td>
-            </tr>
-
-            <!-- Adicione mais perguntas conforme necessário -->
-        </tbody>
-    </table>
-
-    <br>
-    <div class="center">
-        <button type="submit">Enviar Avaliação</button>
-    </div>
-</form>
+<!-- Formulário de validação do funcionário -->
+<div id="funcionarioDiv" class="center" style="display: none;">
+    <h3>Validação do Funcionário</h3>
+    <label for="numeroFuncionario">Número do Funcionário:</label>
+    <input type="text" id="numeroFuncionario" required><br><br>
+    <label for="dataNascimento">Data de Nascimento (DD/MM/AAAA):</label>
+    <input type="text" id="dataNascimento" required><br><br>
+    <button type="button" onclick="validarFuncionario()">Validar</button>
+</div>
 
 <script>
-    let ponderacoes = {}; // Objeto para armazenar as ponderações por departamento
+    let empresaSelecionada = null;
 
-    // Simulando dados de ponderação por departamento
-    const ponderacoesDepartamentos = {
-        '1001': { departamento: 'RH', produtividade: 2, comunicacao: 3 },
-        '1002': { departamento: 'TI', produtividade: 4, comunicacao: 2 },
-        '1003': { departamento: 'Financeiro', produtividade: 3, comunicacao: 4 }
-    };
-
-    // Função para mostrar o inquérito depois que o número de funcionário é inserido
-    function mostrarInquerito() {
-        const numeroFuncionario = document.getElementById('numeroFuncionario').value;
-
-        // Verificar se o número de funcionário está nas ponderações
-        if (ponderacoesDepartamentos[numeroFuncionario]) {
-            ponderacoes = ponderacoesDepartamentos[numeroFuncionario]; // Definir as ponderações do departamento
-
-            document.getElementById('inqueritoTabela').style.display = 'table'; // Exibir a tabela
-            document.getElementById('funcionarioDiv').style.display = 'none'; // Esconder o campo de número de funcionário
-
-            // Atualizar as ponderações de cada pergunta na tabela, inicialmente definidas como 0
-            atualizarPonderacao(1, 0); 
-            atualizarPonderacao(2, 0); 
-        } else {
-            alert("Número de funcionário inválido. Por favor, tente novamente.");
-        }
+    // Função para selecionar a empresa e mostrar o formulário de validação do funcionário
+    function selecionarEmpresa(empresaId) {
+        empresaSelecionada = empresaId;
+        document.getElementById('funcionarioDiv').style.display = 'block';
     }
 
-    // Função para atualizar a ponderação automaticamente quando um botão de rádio é selecionado
-    function atualizarPonderacao(perguntaId, valor) {
-        let ponderacao = 0;
+    // Função para validar o funcionário
+    async function validarFuncionario() {
+        const numeroFuncionario = document.getElementById('numeroFuncionario').value;
+        const dataNascimento = document.getElementById('dataNascimento').value;
 
-        // Definir a ponderação da pergunta de acordo com o departamento
-        if (perguntaId === 1) {
-            ponderacao = valor * ponderacoes.produtividade;
-        } else if (perguntaId === 2) {
-            ponderacao = valor * ponderacoes.comunicacao;
+        // Aqui você faz uma chamada para o backend para validar o número de funcionário e a data de nascimento
+        const response = await fetch('/validarFuncionario', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                numero: numeroFuncionario,
+                nascimento: dataNascimento,
+                empresa: empresaSelecionada
+            })
+        });
+
+        const data = await response.json();
+        
+        if (data.valido) {
+            // Se a validação for bem-sucedida, redireciona para o inquérito
+            window.location.href = "/inquerito";
+        } else {
+            alert("Dados inválidos. Por favor, tente novamente.");
         }
-
-        document.getElementById('ponderacao' + perguntaId).innerText = ponderacao;
     }
 </script>
 
