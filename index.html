@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Inquérito de Avaliação</title>
+    <title>Avaliação de Desempenho 2024 | Jupiter Hotel Group</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -45,7 +45,7 @@
 </head>
 <body>
 
-<h2>Autoavaliação de Desempenho</h2>
+<h2>Avaliação de Desempenho</h2>
 
 <!-- Formulário para inserção do número de funcionário -->
 <div id="funcionarioDiv" class="center">
@@ -64,7 +64,7 @@
                 <th>2 - Insatisfeito</th>
                 <th>3 - Satisfeito</th>
                 <th>4 - Muito Satisfeito</th>
-                <th class="ponderacao">Ponderação</th>
+                <th class="resultado">Resultado</th>
             </tr>
         </thead>
         <tbody>
@@ -75,7 +75,7 @@
                 <td><input type="radio" name="produtividade" value="2" onclick="atualizarPonderacao(1, this.value)"></td>
                 <td><input type="radio" name="produtividade" value="3" onclick="atualizarPonderacao(1, this.value)"></td>
                 <td><input type="radio" name="produtividade" value="4" onclick="atualizarPonderacao(1, this.value)"></td>
-                <td class="ponderacao" id="ponderacao1">0</td>
+                <td class="resultado" id="resultado1">0</td>
             </tr>
 
             <!-- Exemplo de pergunta 2 -->
@@ -85,7 +85,7 @@
                 <td><input type="radio" name="comunicacao" value="2" onclick="atualizarPonderacao(2, this.value)"></td>
                 <td><input type="radio" name="comunicacao" value="3" onclick="atualizarPonderacao(2, this.value)"></td>
                 <td><input type="radio" name="comunicacao" value="4" onclick="atualizarPonderacao(2, this.value)"></td>
-                <td class="ponderacao" id="ponderacao2">0</td>
+                <td class="resultado" id="resultado2">0</td>
             </tr>
 
             <!-- Adicione mais perguntas conforme necessário -->
